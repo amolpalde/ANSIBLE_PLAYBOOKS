@@ -1,0 +1,13 @@
+--- 
+ - name: "Initial Playbook"
+   gather_facts: false
+   hosts: all
+
+   tasks: 
+     - name: "Display Hostname"
+       debug: 
+         msg: "Device name is {{ hostname }}"
+     
+     - name: "Display OS"
+       debug: 
+         msg: "{{ hostname }} is running {{ os }}"

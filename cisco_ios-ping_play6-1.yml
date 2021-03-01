@@ -1,0 +1,17 @@
+--- 
+- name: "Test the reachability from CSR01"
+  connection: local
+  gather_facts: false
+  hosts: CSR01
+  
+  tasks: 
+    - name: Test reachability to 10.250.0.2 
+      ios_ping:
+        dest: 10.250.0.2
+        source: Gig5
+        count: 10
+      
+      register: result
+    - debug: 
+        msg: "{{ result }}"
+

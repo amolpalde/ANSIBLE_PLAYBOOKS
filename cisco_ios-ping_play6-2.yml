@@ -1,0 +1,16 @@
+--- 
+- name: "Test the reachability from CSR01"
+  connection: local
+  gather_facts: false
+  hosts: CSR01
+  
+  tasks: 
+    - name: Test reachability to CSR03 loopback 172.16.100.3 from CSR01. 
+      ios_ping:
+        dest: 172.16.100.3
+        source: loopback0
+        count: 10
+      
+      register: result
+    - debug: 
+        msg: "{{ result }}"

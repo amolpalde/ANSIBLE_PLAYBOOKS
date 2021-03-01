@@ -1,0 +1,21 @@
+--- 
+- name: "SVI Config on nexus Switch"
+  connection: local
+  gather_facts: false
+  hosts: NXOS01
+  
+  tasks: 
+    - name: feature config
+      nxos_feature:
+        feature: interface-vlan
+        state: enabled
+    
+    - name: SVI configuration
+      nxos_l3_interface:
+        name: vlan11
+        ipv4: 172.16.111.1/24
+        state: present
+    
+      register: result
+    - debug: 
+        msg: "{{ result }}"

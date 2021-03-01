@@ -1,0 +1,16 @@
+--- 
+- name: "Static routes deletion on nexus Switch"
+  connection: local
+  gather_facts: false
+  hosts: NXOS01
+  
+  tasks: 
+    - name: remove the configured static routes
+      nxos_config:
+        lines: no ip route 0.0.0.0/0 172.16.200.10
+        authorize: yes
+        save_when: modified
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

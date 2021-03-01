@@ -1,0 +1,33 @@
+- name: Delete address objects on Paloalto firewall
+  hosts: PALO01
+  connection: local
+  gather_facts: no
+
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+  - name: Grab auth creds
+    include_vars: 'PA_vars.yml'
+
+  - name: remove the INSIDE-2 address object
+    panos_address_object:
+      provider: '{{ provider }}'
+      name: INSIDE-2
+      state: 'absent'
+      commit: true
+
+  - name: remove the DMZ-2 address object
+    panos_address_object:
+      provider: '{{ provider }}'
+      name: DMZ-2
+      state: 'absent'
+      commit: true
+    
+    register: result
+
+  - debug:
+      msg: '{{result}}'
+
+

@@ -1,0 +1,34 @@
+---
+- name: Create Network objects
+  hosts: PALO01
+  connection:  local
+  gather_facts:  False
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+  - name: Load Variables
+    include_vars: PA_vars.yml
+
+  - name: Interface config send to PA-1
+    changed_when: false
+    panos_interface:
+      provider: '{{ provider }}'
+      if_name: '{{ item.name }}'
+      ip: ['{{ item.ip }}']
+      zone_name: '{{ item.zone }}'
+      mode: '{{ item.mode }}'
+      enable_dhcp: no
+      commit: no
+    with_items: '{{ interfaces }}'
+
+  - name: Multiple object creation
+    changed_when: false
+    panos_address_object:
+      provider: '{{ provider }}'
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+    with_items: '{{ address_object }}'
+
+

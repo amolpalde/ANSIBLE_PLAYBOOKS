@@ -1,0 +1,25 @@
+--- 
+- name: "Static routes deletion on cisco devices"
+  connection: local
+  gather_facts: false
+  hosts: CSR01
+  
+  tasks: 
+    - name: remove the configured static routes
+      ios_static_route:
+        prefix: 192.168.12.0
+        mask: 255.255.255.0
+        interface: GigabitEthernet2
+        name: Vlan12_route
+        tag: '100'
+        state: absent
+    - name: remove static aggregates route
+      ios_static_route:
+        aggregate:
+          - { prefix: 172.16.11.0, mask: 255.255.255.0, next_hop: 172.16.112.2 }
+          - { prefix: 172.16.13.0, mask: 255.255.255.0, next_hop: 172.16.113.3 }
+        state: absent
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

@@ -1,0 +1,23 @@
+--- 
+- name: "Vrrp Config on nexus Switch"
+  connection: local
+  gather_facts: false
+  hosts: NXOS01
+  
+  tasks:
+    - name: Feature vrrp config
+      nxos_feature:
+        feature: vrrp
+
+    - name: vrrp configuration
+      nxos_vrrp:
+        interface: vlan11
+        state: present
+        group: '11'
+        vip: 172.16.111.3
+        priority: '120'
+        authentication: cisco
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

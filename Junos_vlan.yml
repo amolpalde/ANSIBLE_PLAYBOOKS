@@ -1,0 +1,13 @@
+---
+  Vlans:
+    - name: xe-0/0/4
+      access_vlan: vlan11
+    - name: xe-0/0/5
+      access_vlan: vlan12
+    - name: xe-0/0/6
+      access_vlan: vlan15
+    - name: xe-0/0/7
+      access_vlan: vlan16
+
+
+

@@ -1,0 +1,17 @@
+--- 
+- name: "Default route on Junos Switch"
+  connection: local
+  gather_facts: false
+  hosts: JUNOS01
+  
+  tasks: 
+    - name: configure default route
+      junos_static_route:
+        address: 0.0.0.0/0
+        next_hop: 172.16.100.10
+        preference: 20
+        state: present
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

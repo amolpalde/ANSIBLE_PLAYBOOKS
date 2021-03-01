@@ -1,0 +1,22 @@
+---
+- name: Configure interface Hardening
+  hosts: cisco
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: configure hardening commands under interface
+      ios_config:
+        authorize: yes
+        parents: '{{ item }}'
+        lines:
+          - no ip redirects
+          - no ip unreachables
+      with_items:
+          - interface Gig1
+          - interface Gig2
+          - interface Gig3
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

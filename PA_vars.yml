@@ -1,0 +1,36 @@
+provider:
+  ip_address: "{{ inventory_hostname }}"
+  username: 'apiuser'
+  password: 'Nexaria@1'
+
+##################
+# INTERFACES     #
+##################
+
+interfaces:
+  - name: ethernet1/3
+    ip: 192.168.10.254/24
+    zone: inside
+    mode: layer3
+  - name: ethernet1/4
+    ip: 192.168.20.254/24
+    zone: dmz1
+    mode: layer3
+  - name: ethernet1/5
+    ip: 192.168.30.254/24
+    zone: dmz2
+    mode: layer3
+
+##################
+# Objects #
+##################
+
+address_object:
+  - name: INSIDE-2
+    value: 192.168.10.0/24
+  - name: DMZ-1
+    value: 192.168.20.0/24
+  - name: DMZ-2
+    value: 192.168.30.0/24
+
+

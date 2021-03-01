@@ -1,0 +1,15 @@
+--- 
+- name: "OSPF neighbor verification on cisco devices"
+  connection: local
+  gather_facts: false
+  hosts: CSR02
+  
+  tasks: 
+    - name: "Check ospf neighborship on CSR02"
+      ios_command: 
+        commands: 
+          - "show ip ospf neighbor"
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"

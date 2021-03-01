@@ -1,0 +1,15 @@
+--- 
+- name: "OSPF neighbor verification on arista devices"
+  connection: local
+  gather_facts: false
+  hosts: ARISTA02
+  
+  tasks: 
+    - name: "Check ospf neighborship on ARISTA02"
+      ios_command: 
+        commands: 
+          - "show ip ospf neighbor"
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"

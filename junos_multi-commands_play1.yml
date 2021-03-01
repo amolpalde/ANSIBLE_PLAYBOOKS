@@ -1,0 +1,17 @@
+--- 
+
+- name: "Several commands at a time on Junos Switch"
+  connection: local
+  gather_facts: false
+  hosts: JUNOS01
+  
+  tasks: 
+    - name: "Check multiple commands and existing users on junos devices"
+      junos_command: 
+        commands: 
+          - show version
+          - show system users
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

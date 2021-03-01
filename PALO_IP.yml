@@ -1,0 +1,11 @@
+---
+- name: Collect interface IP Details
+  hosts: PALO01
+  gather_facts: false
+
+  tasks:
+    - name: collect the IP details
+      raw: "show int all"
+
+      register: output
+    -  debug: var=output

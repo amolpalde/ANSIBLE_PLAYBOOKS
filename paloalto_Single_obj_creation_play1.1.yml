@@ -1,0 +1,26 @@
+---
+- name: Add some address objects to the firewall
+  hosts: PALO01
+  connection: local
+  gather_facts: no
+
+  roles:
+    - role: PaloAltoNetworks.paloaltonetworks
+
+  tasks:
+  - name: Load Variables
+    include_vars: PA_vars.yml
+  
+  - name: create objects
+    panos_address_object:
+      provider: "{{ provider }}"
+      name: 'INSIDE-1'
+      value: '1.1.1.1/32'
+      description: 'INSIDE-1 object'
+
+    register: result
+
+  - debug:
+      msg: '{{result}}'
+
+

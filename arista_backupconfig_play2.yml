@@ -1,0 +1,21 @@
+--- 
+- name: "backup the arista Switch config"
+  connection: local
+  gather_facts: false
+  hosts: ARISTA01
+  
+  tasks: 
+    - name: "show run only on ARISTA01"
+      eos_command: 
+        authorize: yes
+        commands: 
+          - "terminal length 0"
+          - "show run"
+          - "terminal length 24" 
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"
+
+    - name: save backup into a file
+      copy: content="{{ result.stdout[1] }}" dest="./backup/{{ inventory_hostname }}.txt"

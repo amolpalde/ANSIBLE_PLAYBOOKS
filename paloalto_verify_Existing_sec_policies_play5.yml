@@ -1,0 +1,25 @@
+---
+- name: Checking available Security rules
+  hosts: PALO01
+  connection: local
+  gather_facts: false
+
+
+  roles:
+    - role: PaloAltoNetworks.paloaltonetworks
+
+  tasks:
+   - name: Grab auth creds
+     include_vars: 'PA_vars.yml'
+     no_log: 'yes'
+
+   - name: PA existing rules - Retrieve rulebase facts
+     panos_security_rule_facts:
+      provider: '{{ provider }}'
+      device_group: '{{ device_group | default(omit) }}'
+     
+     register: result
+
+   - debug: 
+       msg: '{{ result }}'
+

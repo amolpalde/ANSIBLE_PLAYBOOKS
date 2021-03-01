@@ -1,0 +1,11 @@
+---
+- name: Collect interface IP Details
+  hosts: JUNOS01
+  gather_facts: false
+
+  tasks:
+    - name: collect the IP details
+      raw: "show int terse | match inet"
+
+      register: output
+    -  debug: var=output

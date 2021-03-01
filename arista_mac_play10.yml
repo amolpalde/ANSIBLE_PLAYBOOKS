@@ -1,0 +1,15 @@
+--- 
+- name: "Trunk verification on arista devices"
+  connection: local
+  gather_facts: false
+  hosts: ARISTA02
+  
+  tasks: 
+    - name: "Check trunk link negotioation on ARISTA01"
+      eos_command: 
+        commands: 
+          - "show mac address-table"
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"

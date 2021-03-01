@@ -1,0 +1,15 @@
+--- 
+- name: "Source Binding verification on arista devices"
+  connection: local
+  gather_facts: false
+  hosts: ARISTA02
+  
+  tasks: 
+    - name: "Source Binding on ARISTA02"
+      eos_command: 
+        commands: 
+          - "show ip source binding static"
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"

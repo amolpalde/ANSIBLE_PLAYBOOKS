@@ -1,0 +1,16 @@
+--- 
+- name: "Several commands at a time on cisco devices"
+  connection: local
+  gather_facts: false
+  hosts: cisco
+  
+  tasks: 
+    - name: "Check ospf neighborship and existing users on cisco devices"
+      ios_command: 
+        commands: 
+          - "show ip ospf neighbor"
+          - "show users"
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"

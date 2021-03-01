@@ -1,0 +1,31 @@
+---
+- name: Create Security policy
+  hosts: PALO01
+  connection: local
+  gather_facts: no
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+    - name: Grab auth creds
+      include_vars: 'PA_vars.yml'
+      no_log: 'yes'
+  
+    - name: Allow https from outside to inside on Paloalto
+      panos_security_rule:
+       provider: '{{ provider }}'       
+       rule_name: 'ALLOW_HTTPS-OUT-TO-IN'
+       description: 'ALLOW_HTTPS-OUT-TO-IN'
+       source_zone: ['outside']
+       source_ip: ['any']
+       destination_zone: ['inside']
+       destination_ip: ['200.1.1.20']
+       service: ['service-https']
+       action: 'allow'
+
+      register: result
+
+    - debug:
+        msg: '{{result}}'
+

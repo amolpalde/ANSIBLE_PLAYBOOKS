@@ -1,0 +1,18 @@
+---
+- name: Configure OSPF between CSR02 and CSR03
+  hosts: cisco
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: configure ospf
+      ios_config:
+        authorize: yes
+        parents: interface Gig1
+        lines:
+          - ip ospf 1 area 0
+          - ip ospf network point-to-point
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

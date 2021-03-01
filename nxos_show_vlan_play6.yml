@@ -1,0 +1,16 @@
+--- 
+
+- name: "Access Port Verification on cisco Nexus Switch"
+  connection: local
+  gather_facts: false
+  hosts: NXOS01
+  
+  tasks: 
+    - name: "Check Vlan membership on NXOS Swicth"
+      nxos_command: 
+        commands: 
+          - "show vlan brief"
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"

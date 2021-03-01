@@ -1,0 +1,16 @@
+--- 
+- name: "Several commands at a time on cisco Nexus Switch"
+  connection: local
+  gather_facts: false
+  hosts: NXOS01
+  
+  tasks: 
+    - name: "Check multiple commands and existing users on cisco devices"
+      ios_command: 
+        commands: 
+          - "show version"
+          - "show users"
+      
+      register: result
+    - debug: 
+        msg: "{{ result.stdout_lines }}"

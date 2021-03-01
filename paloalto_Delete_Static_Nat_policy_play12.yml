@@ -1,0 +1,25 @@
+---
+- name: Delete the Static NAT rule
+  hosts: PALO01
+  connection: local
+  gather_facts: False
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+  - name: Grab the credentials from ansible-vault
+    include_vars: 'PA_vars.yml'
+    no_log: 'yes'
+
+  - name: Delete Static NAT Rule
+    panos_nat_rule:
+      provider: '{{ provider }}'      
+      state: 'absent'
+      rule_name: 'WEB_SERVER-Inbound'
+     
+    register: result
+
+  - debug:
+      msg: '{{ result }}'
+

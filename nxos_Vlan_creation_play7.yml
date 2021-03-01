@@ -1,0 +1,20 @@
+--- 
+- name: "vlans creation on nexus Switch"
+  connection: local
+  gather_facts: false
+  hosts: NXOS01
+  
+  tasks: 
+    - name: vlan configuration
+      nxos_vlan:
+        vlan_range: 21-200
+        state: present
+
+    - name: vlans brief
+      nxos_command:
+        commands:
+          - show vlan brief
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

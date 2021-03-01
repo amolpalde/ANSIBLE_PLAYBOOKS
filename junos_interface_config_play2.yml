@@ -1,0 +1,17 @@
+--- 
+
+- name: "Interface Config on Junos Switch"
+  connection: local
+  gather_facts: false
+  hosts: JUNOS01
+  
+  tasks: 
+    - name: "Interface config on junos devices"
+      junos_config: 
+        commands: 
+          - delete interfaces xe-0/0/3
+          - set interfaces xe-0/0/3 unit 0 family inet address 172.16.201.1/24
+        confirm_commit: yes
+      register: result
+    - debug: 
+        msg: "{{ result }}"

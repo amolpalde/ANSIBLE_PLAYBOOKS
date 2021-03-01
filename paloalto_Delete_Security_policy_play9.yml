@@ -1,0 +1,32 @@
+---
+- name: Delete the security rules
+  hosts: PALO01
+  connection: local
+  gather_facts: False
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+  - name: Grab the credentials from ansible-vault
+    include_vars: 'PA_vars.yml'
+    no_log: 'yes'
+
+  - name: Delete rule No.2
+    panos_security_rule:
+      provider: '{{ provider }}'      
+      state: 'absent'
+      rule_name: 'ICMP_OUT-TO-IN'
+
+  - name: Delete rule No.3
+    panos_security_rule:
+      provider: '{{ provider }}'
+      state: 'absent'
+      rule_name: 'ALLOW_HTTPS-OUT-TO-IN'
+  
+    register: result
+
+  - debug:
+      msg: '{{result}}'
+ 
+

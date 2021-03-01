@@ -1,0 +1,11 @@
+---
+- name: Collect interface IP Details
+  hosts: eos
+  gather_facts: false
+
+  tasks:
+    - name: collect the IP details
+      raw: "show ip int brief | exclude unas"
+
+      register: output
+    -  debug: var=output.stdout_lines

@@ -1,0 +1,19 @@
+--- 
+- name: "Vlans Creation and Passing the vlans on the access ports"
+  connection: local
+  gather_facts: false
+  hosts: eos
+  
+  tasks: 
+    - name: "Vlan and Access port Config"
+      eos_vlan:
+        authorize: yes
+        aggregate:
+          - {vlan_id: '11', name: vlan-11, interfaces: ethernet4 }
+          - {vlan_id: '12', name: vlan-12, interfaces: ethernet5 }
+          - {vlan_id: '13', name: vlan-13, interfaces: ethernet6 }
+          - {vlan_id: '14', name: vlan-14, interfaces: ethernet7 }
+          - {vlan_id: '15', name: vlan-15, interfaces: ethernet8 } 
+      register: result
+    - debug: 
+        msg: "{{ result }}"

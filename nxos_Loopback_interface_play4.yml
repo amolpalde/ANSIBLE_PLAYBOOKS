@@ -1,0 +1,22 @@
+--- 
+- name: "Loopback Interface cration on nexus Switch"
+  connection: local
+  gather_facts: false
+  hosts: NXOS01
+  
+  tasks: 
+    - name: Intertface Configuration on Nexus Device
+      nxos_interface:
+        name: loopback20
+        authorize: yes
+        admin_state: up
+        state: present
+
+    - name: Configure the IP address for loopback
+      nxos_config:
+        lines: ip address 172.16.20.20/24
+        parents: interface loopback20
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

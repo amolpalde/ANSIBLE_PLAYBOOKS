@@ -1,0 +1,21 @@
+--- 
+- name: "Configure IP Source binding on ARISTA02" 
+  connection: local
+  gather_facts: false
+  hosts: ARISTA02
+
+  tasks: 
+    - name: "configure ip source binding"
+      eos_config: 
+        authorize: true
+        lines: 
+          - ip source binding 172.16.11.11 0.0.11 vlan 11 interface ethernet4
+          - ip source binding 172.16.12.12 0.0.12 vlan 12 interface ethernet5
+          - ip source binding 172.16.13.13 0.0.13 vlan 13 interface ethernet6
+          - ip source binding 172.16.14.14 0.0.14 vlan 14 interface ethernet7
+          - ip source binding 172.16.15.15 0.0.15 vlan 15 interface ethernet8
+
+      register: result
+    - 
+      debug: 
+        msg: "{{ result }}"

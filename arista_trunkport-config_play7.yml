@@ -1,0 +1,19 @@
+--- 
+- name: "Trunk link config on arista devices"
+  connection: local
+  gather_facts: false
+  hosts: eos
+  
+  tasks:
+    - name: "Trunk config"
+      eos_l2_interface:
+        name: Ethernet3
+        authorize: yes
+        native_vlan: "999"
+        trunk_allowed_vlans: 2-200
+        mode: trunk
+        state: present
+      
+      register: result
+    - debug: 
+        msg: "{{ result }}"

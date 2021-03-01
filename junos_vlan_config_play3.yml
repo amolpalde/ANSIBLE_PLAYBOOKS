@@ -1,0 +1,21 @@
+--- 
+- name: "Vlan and access on Junos Switch"
+  connection: local
+  gather_facts: false
+  hosts: JUNOS01
+  
+  tasks: 
+    
+    - name: vlan configuration
+      junos_config:
+        lines:
+          - set vlans vlan11 vlan-id 11
+          - set vlans vlan12 vlan-id 12
+          - set vlans vlan13 vlan-id 13
+          - set vlans vlan14 vlan-id 14 
+          - set vlans vlan15 vlan-id 15
+        confirm_commit: yes
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

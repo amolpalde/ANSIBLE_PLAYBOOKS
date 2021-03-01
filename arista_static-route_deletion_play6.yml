@@ -1,0 +1,24 @@
+--- 
+- name: "Static routes deletion on arista devices"
+  connection: local
+  gather_facts: false
+  hosts: ARISTA01
+  
+  tasks: 
+    - name: add the configured static routes
+      eos_static_route:
+        address: 192.168.12.0/24
+        next_hop: Ethernet2
+        authorize: yes
+        state: absent
+    - name: add static aggregates route
+      eos_static_route:
+        authorize: yes
+        aggregate:
+          - { address: 172.16.11.0/24, next_hop: 200.1.1.10 }
+          - { address: 172.16.13.0/24, next_hop: 172.16.45.5, admin_distance: 20 }
+        state: absent
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"

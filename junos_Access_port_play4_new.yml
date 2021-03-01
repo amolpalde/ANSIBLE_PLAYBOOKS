@@ -1,0 +1,17 @@
+--- 
+- name: "access port config on Junos Switch"
+  connection: local
+  gather_facts: false
+  hosts: JUNOS01
+
+  tasks:
+    - name: "l2 Interface config on junos devices"
+      junos_l2_interface:
+        name: '{{ item.key }}'
+        mode: access
+        access_vlan: '{{ item.value }}'
+      with_dict: {xe-0/0/4: vlan11,xe-0/0/5: vlan12,xe-0/0/6: vlan15,xe-0/0/7: vlan16}
+      
+      register: result
+    - debug: 
+        msg: "{{ result }}"

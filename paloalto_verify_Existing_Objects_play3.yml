@@ -1,0 +1,26 @@
+---
+- name: Check available objects
+  hosts: PALO01
+  connection: local
+  gather_facts: false
+
+  collections:
+    - paloaltonetworks.panos
+
+  tasks:
+  - name: Grab auth creds
+    include_vars: 'PA_vars.yml'
+    no_log: 'yes'
+
+  - name: Get all address groups and their config
+    panos_object_facts:
+      provider: '{{ provider }}'
+      object_type: 'address'
+      name_regex: '.*'
+    register: result
+
+  - debug:
+      msg: '{{result}}'
+
+
+

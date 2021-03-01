@@ -1,0 +1,17 @@
+---
+- name: Configure OSPF between ARISTA01 and ARISTA02
+  hosts: eos
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: configure ospf
+      eos_config:
+        authorize: yes
+        lines:
+          - ip ospf area 0.0.0.1
+          - ip ospf network point-to-point
+        parents: interface Ethernet3
+      register: result
+    - debug: 
+        msg: "{{ result }}"

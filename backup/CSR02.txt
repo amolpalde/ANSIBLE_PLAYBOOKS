@@ -1,0 +1,186 @@
+Building configuration...
+
+Current configuration : 2227 bytes
+!
+! Last configuration change at 14:13:19 UTC Thu Nov 26 2020
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname CSR02
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name nexaria.com
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-2471474783
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2471474783
+ revocation-check none
+ rsakeypair TP-self-signed-2471474783
+!
+!
+crypto pki certificate chain TP-self-signed-2471474783
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9XV61Q74G5M
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+username apiuser privilege 15 password 0 Nexaria@1
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 172.16.100.2 255.255.255.255
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!
+interface GigabitEthernet1
+ description TO_CSR3
+ ip address 172.16.23.2 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description TO_CSR1
+ ip address 172.16.112.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ description TO_EOS-1
+ ip address 172.16.24.2 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf 1 area 1
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ description TO-MGMT0
+ ip address 10.250.100.32 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 172.16.2.2
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ login local
+ transport preferred ssh
+ transport input all
+ transport output telnet
+!
+!
+!
+!
+!
+!
+end

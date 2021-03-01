@@ -1,0 +1,23 @@
+--- 
+- name: "Static routes on cisco devices"
+  connection: local
+  gather_facts: false
+  hosts: CSR01
+  
+  tasks: 
+    - name: configure static route with name and tag
+      ios_static_route:
+        prefix: 192.168.12.0
+        mask: 255.255.255.0
+        interface: GigabitEthernet2
+        name: Vlan12_route
+        tag: '100'
+    - name: Add static aggregates route
+      ios_static_route:
+        aggregate:
+          - { prefix: 172.16.11.0, mask: 255.255.255.0, next_hop: 172.16.112.2 }
+          - { prefix: 172.16.13.0, mask: 255.255.255.0, next_hop: 172.16.113.3 }
+
+      register: result
+    - debug: 
+        msg: "{{ result }}"
