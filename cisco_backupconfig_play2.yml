@@ -17,4 +17,4 @@
         msg: "{{ result.stdout_lines }}"
 
     - name: save backup into a file
-      copy: content="{{ result.stdout[1] }}" dest="./backup/{{ inventory_hostname }}.txt"
+      copy: content="{{ result.stdout[1] }}" dest="/var/tmp/backup/{{ inventory_hostname }}.txt"
